@@ -27,8 +27,6 @@ services:
     # Mount the local code as a volume for automatic reload
     volumes:
       - .:/usr/src/app
-      # Optional: avoid overwriting node_modules inside container
-      - /usr/src/app/node_modules
 
 volumes:
   db-data:

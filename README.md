@@ -35,4 +35,4 @@ Docker, Nestjs, Postgress powered by Prisma
 
 
     # Import User Sample data
-        docker exec -it nestjs-prisma-app npm run seed
+        docker exec -it nestjs-prisma-app npm run prisma:seed
