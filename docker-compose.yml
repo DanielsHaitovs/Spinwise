@@ -1,7 +1,5 @@
 services:
   db:
-    env_file:
-      - .env
     image: postgres:15
     container_name: nestjs-prisma-db
     restart: always
@@ -15,15 +13,13 @@ services:
       - db-data:/var/lib/postgresql/data
 
   app:
-    env_file:
-      - .env
     build:
       context: .
       dockerfile: Dockerfile
     container_name: nestjs-prisma-app
     restart: always
     ports:
-      - '${APP_PORT}:${APP_PORT}'
+      - "${API_PORT}:${API_PORT}"
     depends_on:
       - db
     environment:
