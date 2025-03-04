@@ -1,0 +1,38 @@
+services:
+  db:
+    env_file:
+      - .env
+    image: postgres:15
+    container_name: nestjs-prisma-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - '${DB_PORT}:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  app:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nestjs-prisma-app
+    restart: always
+    ports:
+      - '${APP_PORT}:${APP_PORT}'
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    # Mount the local code as a volume for automatic reload
+    volumes:
+      - .:/usr/src/app
+      # Optional: avoid overwriting node_modules inside container
+      - /usr/src/app/node_modules
+
+volumes:
+  db-data:
