@@ -74,15 +74,23 @@ export class UserService {
         }
 
         if (firstNames != undefined && firstNames.length > 0) {
-            where['firstName'] = {
-                in: firstNames,
-            };
+            where.OR.push({
+                firstName: {
+                    in: firstNames,
+                },
+            });
         }
 
         if (lastNames != undefined && lastNames.length > 0) {
-            where['lastName'] = {
-                in: lastNames,
-            };
+            where.OR.push({
+                lastName: {
+                    in: lastNames,
+                },
+            });
+        }
+
+        if (where.OR.length === 0) {
+            where.OR = [];
         }
 
         if (skip !== undefined && skip > 0 && take !== undefined && take > 0) {
@@ -91,10 +99,10 @@ export class UserService {
 
         const [count, users] = await Promise.all([
             this.prismaService.user.count({
-                where,
+                where: where.OR.length > 0 ? where : undefined,
             }),
             this.prismaService.user.findMany({
-                where,
+                where: where.OR.length > 0 ? where : undefined,
                 skip,
                 take,
             }),
