@@ -1,9 +1,11 @@
 import { Body, Controller, Delete, Get, Param, ParseArrayPipe, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
-import { UserService } from './user.service';
 import { ApiBadRequestResponse, ApiBody, ApiInternalServerErrorResponse, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiUnprocessableEntityResponse } from '@nestjs/swagger';
-import { CreateUserDto, GetUserDto, UpdateUserDto } from './user.dto';
+
 import { User } from '@prisma/client';
-import { QueryRespsonse } from 'src/prisma/response.dto';
+import { UserService } from './user.service';
+
+import { QueryRespsonse } from '@PrismaDb/response.dto';
+import { CreateUserDto, GetUserDto, UpdateUserDto } from './user.dto';
 
 @Controller('users')
 export class UserController {

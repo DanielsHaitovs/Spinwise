@@ -1,9 +1,11 @@
 import { BadRequestException, Injectable, UnprocessableEntityException } from '@nestjs/common';
-import { CreateUserDto, UserQueryDto, UpdateUserDto } from './user.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+
 import { Prisma, User } from '@prisma/client';
+import { PrismaService } from '@PrismaDb/prisma.service';
+
+import { CreateUserDto, UserQueryDto, UpdateUserDto } from './user.dto';
+import { QueryRespsonse } from '@PrismaDb/response.dto';
 import { UserWhereOrQuery } from './query.type';
-import { QueryRespsonse } from 'src/prisma/response.dto';
 
 @Injectable()
 export class UserService {
