@@ -1,5 +1,5 @@
 export type UserWhereQuery = {
-    id?: { in: number[] }; 
+    id?: { in: number[] };
     email?: { in: string[] };
     firstName?: { in: string[] };
     lastName?: { in: string[] };

@@ -106,11 +106,3 @@ export class UserQueryDto {
     @IsOptional()
     limit?: number;
 }
-
-export class QueryRespsonse<T> {
-    @ApiProperty()
-    count: number;
-
-    @ApiProperty()
-    data: T[];
-}
