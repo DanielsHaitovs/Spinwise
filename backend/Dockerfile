@@ -1,26 +1,26 @@
-# Step 1: Use a Node official image
-FROM node:22.14.0
+# Use Node 22.14.0 on Alpine Linux as a parent image
+FROM node:22.14.0-alpine
 
-# Step 2: Set working directory
+# Set working directory
 WORKDIR /usr/src/app
 
-# Step 3: Copy package.json and package-lock.json
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Step 4: Install dependencies
+# Install dependencies
 RUN npm install
 
-# Step 5: Copy the rest of the application
+# Copy the rest of the source code
 COPY . .
 
-# Step 6: Generate Prisma client
+# Generate Prisma client
 RUN npx prisma generate
 
-# Step 7: Build Nest project
+# Build the NestJS application (adjust command if needed)
 RUN npm run build
 
-# Step 8: Expose port
-EXPOSE 3000
+# Expose the port your app runs on (adjust if your app uses a different port)
+EXPOSE 3001
 
-# Step 9: Run command
-CMD ["npm", "run", "start:dev"]
+# Run the application
+CMD ["npm", "run", "start"]
