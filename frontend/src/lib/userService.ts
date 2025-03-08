@@ -4,7 +4,8 @@ import type { CreateUserDto, User, UsersResponse } from '@/types/user'
  * UserService class provides methods to interact with the user API.
  */
 export class UserService {
-  private static API_BASE_URL = process.env.NEXT_PUBLIC_EXTERNAL_API_URL
+  // private static INTERNAL_API_URL = process.env.INTERNAL_API_URL
+  static API_BASE_URL = process.env.EXTERNAL_API_URL
 
   /**
    * Creates a new user.
@@ -57,7 +58,7 @@ export class UserService {
    * @returns {Promise<UsersResponse>} The response containing the users and the total count.
    * @throws Will throw an error if the user fetch fails.
    */
-  static async fetch(page: number, limit: number): Promise<UsersResponse> {
+  static async fetchUsers(page: number, limit: number): Promise<UsersResponse> {
     const res = await fetch(
       `${this.API_BASE_URL}/users/by?page=${page}&limit=${limit}`,
       { cache: 'no-store' },

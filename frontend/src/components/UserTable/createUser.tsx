@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/dialog'
 import { toast } from 'sonner'
 import type { CreateUserDto, User } from '@/types/user'
-import { UserService } from '@/lib/userService'
 
 /**
  * CreateUserPopup component allows creating a new user.
@@ -41,10 +40,22 @@ export default function CreateUserPopup() {
     }
 
     try {
-      const createdUser: User = await UserService.createUser(newUser)
-      toast.success(`User ${createdUser.firstName} created successfully!`, {
-        duration: 10000,
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newUser),
       })
+
+      if (!response.ok) {
+        throw new Error('Failed to create user')
+      }
+
+      const data: { message: string; data: User } = await response.json()
+
+      toast.success(`User ${data.data.firstName} created successfully!`, {
+        duration: 5000,
+      })
+
       setOpen(false)
       // Refresh the page to update the user list immediately
       router.refresh()

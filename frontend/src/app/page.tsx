@@ -2,11 +2,11 @@ import CreateUserPopup from '@/components/UserTable/createUser'
 import UsersTable from '@/components/UserTable/usersTable'
 
 interface HomeProps {
-  searchParams: { page?: string } | Promise<{ page?: string }>
+  searchParams: Promise<{ page?: string }>
 }
 
 export default async function Home({ searchParams }: HomeProps) {
-  const sp = await Promise.resolve(searchParams)
+  const sp = await searchParams
   const page = Number(sp.page) || 1
 
   return (

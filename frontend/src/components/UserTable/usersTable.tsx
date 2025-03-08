@@ -27,7 +27,7 @@ interface UsersTableProps {
  */
 export default async function UsersTable({ page }: UsersTableProps) {
   const limit = 5
-  const usersData: UsersResponse = await UserService.fetch(page, limit)
+  const usersData: UsersResponse = await UserService.fetchUsers(page, limit)
   const totalPages = Math.ceil(usersData.count / limit)
 
   // Redirect to the previous page if the current page has no users and is greater than 1

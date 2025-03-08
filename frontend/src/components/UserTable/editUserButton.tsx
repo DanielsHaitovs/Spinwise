@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/dialog'
 import { toast } from 'sonner'
 import type { User, CreateUserDto } from '@/types/user'
-import { UserService } from '@/lib/userService'
 
 /**
  * Props for the EditUserButton component.
@@ -49,10 +48,22 @@ export default function EditUserButton({ user }: EditUserButtonProps) {
     }
 
     try {
-      const updatedUser = await UserService.updateUser(user.id, updateData)
-      toast.success(`User ${updatedUser.firstName} updated successfully!`, {
+      const response = await fetch(`/api/users/${user.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateData),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update user')
+      }
+
+      const { message } = await response.json()
+
+      toast.success(message, {
         duration: 10000,
       })
+
       setOpen(false)
       router.refresh()
     } catch (error) {
