@@ -27,12 +27,12 @@ Docker, Nestjs, Postgress powered by Prisma
           !!! in case of db setup change don't forget to remove db-data volume
     # Prisma 
         Once DB is up and ready to accept the connections
-          2-3. OPTIONAL because is done during build - docker exec -it nestjs-prisma-app npx prisma generate # generates the Prisma Client based on your Prisma schema
-          2-4. docker exec -it nestjs-prisma-app npx prisma migrate deploy # will run migrations
+          2-3. OPTIONAL because is done during build - docker exec -it nestjs-backend npx prisma generate # generates the Prisma Client based on your Prisma schema
+          2-4. docker exec -it nestjs-backend npx prisma migrate deploy # will run migrations
       
         List migrations
-          docker exec -it nestjs-prisma-app npx prisma migrate status
+          docker exec -it nestjs-backend npx prisma migrate status
 
 
     # Import User Sample data
-        docker exec -it nestjs-prisma-app npm run prisma:seed
+        docker exec -it nestjs-backend npm run prisma:seed
