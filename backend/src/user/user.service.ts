@@ -1,11 +1,13 @@
-import { BadRequestException, Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 
 import { Prisma, User } from '@prisma/client';
-import { PrismaService } from '@PrismaDb/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
+
+// import { PrismaService } from '@PrismaDb/prisma.service';
 
 import { CreateUserDto, UserQueryDto, UpdateUserDto } from './user.dto';
 import { QueryRespsonse } from '@PrismaDb/response.dto';
-import { UserWhereOrQuery } from './query.type';
+import { UserWhereOrQuery } from '../prisma/query.type';
 
 @Injectable()
 export class UserService {
@@ -113,10 +115,7 @@ export class UserService {
         }
 
         if (count === 0) {
-            return {
-                count: 0,
-                data: [],
-            };
+            throw new NotFoundException(`Could not find any user with provided filter ${JSON.stringify(filter)}`);
         }
 
         return {

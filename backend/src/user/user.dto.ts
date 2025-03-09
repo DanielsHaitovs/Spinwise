@@ -50,7 +50,7 @@ export class GetUserDto extends CreateUserDto {
         title: 'User Created At',
         type: Date,
         nullable: false,
-        required: true
+        required: true,
     })
     @IsNotEmpty()
     createdAt: Date;
@@ -59,7 +59,7 @@ export class GetUserDto extends CreateUserDto {
         title: 'User Updated At',
         type: Date,
         nullable: false,
-        required: true
+        required: true,
     })
     @IsNotEmpty()
     updatedAt: Date;
