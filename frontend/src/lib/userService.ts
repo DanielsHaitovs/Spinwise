@@ -21,12 +21,16 @@ export class UserService {
     })
 
     if (!res.ok) {
-      throw new Error('Failed to create user')
+      const {
+        error: { message },
+      } = await res.json()
+
+      // Extract the error message either from the top-level or nested error object
+      throw new Error(message ?? 'Failed to create user')
     }
 
     return res.json()
   }
-
   /**
    * Updates an existing user.
    * @param {number} id - The ID of the user to update.
@@ -45,7 +49,14 @@ export class UserService {
     })
 
     if (!res.ok) {
-      throw new Error('Failed to update user')
+      if (!res.ok) {
+        const {
+          error: { message },
+        } = await res.json()
+
+        // Extract the error message either from the top-level or nested error object
+        throw new Error(message ?? 'Failed to create user')
+      }
     }
 
     return res.json()
@@ -65,7 +76,12 @@ export class UserService {
     )
 
     if (!res.ok) {
-      throw new Error('Failed to fetch users from external API')
+      const {
+        error: { message },
+      } = await res.json()
+
+      // Extract the error message either from the top-level or nested error object
+      throw new Error(message ?? 'Failed to create user')
     }
 
     return res.json()
@@ -83,7 +99,12 @@ export class UserService {
     })
 
     if (!res.ok) {
-      throw new Error('Failed to delete user')
+      const {
+        error: { message },
+      } = await res.json()
+
+      // Extract the error message either from the top-level or nested error object
+      throw new Error(message ?? 'Failed to create user')
     }
 
     return res.text()

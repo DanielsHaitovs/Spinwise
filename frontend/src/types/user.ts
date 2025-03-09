@@ -3,6 +3,8 @@ export type User = {
   email: string
   firstName: string
   lastName: string
+  createdAt: Date
+  updatedAt: Date
 }
 
 export interface CreateUserDto {

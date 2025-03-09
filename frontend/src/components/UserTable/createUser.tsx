@@ -13,7 +13,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog'
 import { toast } from 'sonner'
-import type { CreateUserDto, User } from '@/types/user'
+import type { CreateUserDto } from '@/types/user'
 
 /**
  * CreateUserPopup component allows creating a new user.
@@ -46,22 +46,25 @@ export default function CreateUserPopup() {
         body: JSON.stringify(newUser),
       })
 
+      // Check if the response indicates an error
       if (!response.ok) {
-        throw new Error('Failed to create user')
+        const { error } = await response.json()
+
+        toast.error(error, { duration: 5000 })
+        return // Stop further processing if there was an error
       }
 
-      const data: { message: string; data: User } = await response.json()
+      // If response is OK, get the success message
+      const { message } = await response.json()
 
-      toast.success(`User ${data.data.firstName} created successfully!`, {
-        duration: 5000,
-      })
-
+      toast.success(message, { duration: 5000 })
       setOpen(false)
       // Refresh the page to update the user list immediately
       router.refresh()
-    } catch (error) {
-      console.error('Failed to create user', error)
-      toast.error('Failed to create user', { duration: 5000 })
+    } catch (e) {
+      toast.error('An unexpected error occurred when tried to create user', {
+        duration: 5000,
+      })
     }
   }
 

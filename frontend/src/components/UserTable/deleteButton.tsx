@@ -17,16 +17,21 @@ export default function DeleteUserButton({ userId }: DeleteButtonProps) {
         method: 'DELETE',
       })
 
+      // Check if the response indicates an error
       if (!response.ok) {
-        throw new Error('Failed to delete user')
+        const { error } = await response.json()
+
+        toast.error(error, { duration: 5000 })
+        return // Stop further processing if there was an error
       }
 
-      const data = await response.json()
-      toast.success(data.message, { duration: 5000 })
+      const { message } = await response.json()
+      toast.success(message, { duration: 5000 })
       router.refresh()
-    } catch (error) {
-      console.error('Failed to delete user', error)
-      toast.error('Failed to delete user', { duration: 5000 })
+    } catch (e) {
+      toast.error('An unexpected error occurred when trying to delete user', {
+        duration: 5000,
+      })
     }
   }
 

@@ -15,11 +15,12 @@ export async function DELETE(request: Request) {
     const result = await UserService.deleteUser(Number(id))
 
     return NextResponse.json({ message: result })
-  } catch (error) {
-    console.error('Error deleting user:', error)
+  } catch (e) {
+    const error = e as Error
 
+    // Return the error message as JSON instead of throwing an error
     return NextResponse.json(
-      { error: 'Failed to delete user' },
+      { error: error.message ?? 'An error occurred while deleting user' },
       { status: 500 },
     )
   }
@@ -41,11 +42,12 @@ export async function PUT(request: Request) {
     return NextResponse.json({
       message: `User ${result.email} updated successfully`,
     })
-  } catch (error) {
-    console.error('Error updating user:', error)
+  } catch (e) {
+    const error = e as Error
 
+    // Return the error message as JSON instead of throwing an error
     return NextResponse.json(
-      { error: 'Failed to update user' },
+      { error: error.message ?? 'An error occurred while updating user' },
       { status: 500 },
     )
   }

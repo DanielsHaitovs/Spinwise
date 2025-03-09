@@ -46,6 +46,7 @@ export default async function UsersTable({ page }: UsersTableProps) {
             <TableHead>Email</TableHead>
             <TableHead>First Name</TableHead>
             <TableHead>Last Name</TableHead>
+            <TableHead>Created At</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -63,6 +64,7 @@ export default async function UsersTable({ page }: UsersTableProps) {
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.firstName}</TableCell>
                 <TableCell>{user.lastName}</TableCell>
+                <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
                 <TableCell>
                   <div className="flex gap-2">
                     <EditUserButton user={user} />

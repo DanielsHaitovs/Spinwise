@@ -54,8 +54,12 @@ export default function EditUserButton({ user }: EditUserButtonProps) {
         body: JSON.stringify(updateData),
       })
 
+      // Check if the response indicates an error
       if (!response.ok) {
-        throw new Error('Failed to update user')
+        const { error } = await response.json()
+
+        toast.error(error, { duration: 5000 })
+        return // Stop further processing if there was an error
       }
 
       const { message } = await response.json()
@@ -66,9 +70,10 @@ export default function EditUserButton({ user }: EditUserButtonProps) {
 
       setOpen(false)
       router.refresh()
-    } catch (error) {
-      console.error('Failed to update user', error)
-      toast.error('Failed to update user', { duration: 5000 })
+    } catch (e) {
+      toast.error('An unexpected error occurred when tried to update user', {
+        duration: 5000,
+      })
     }
   }
 
