@@ -23,6 +23,7 @@ services:
       DATABASE_URL: ${DATABASE_URL}
     volumes:
       - ./backend:/usr/src/app
+      - ./backend/prisma:/usr/src/app/prisma
       - /usr/src/app/node_modules
     depends_on:
       - postgres
