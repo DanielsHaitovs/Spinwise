@@ -5,7 +5,7 @@ import { PrismaService } from '@PrismaDb/prisma.service';
 
 import { CreateUserDto, UserQueryDto, UpdateUserDto } from './user.dto';
 import { QueryRespsonse } from '@PrismaDb/response.dto';
-import { UserWhereOrQuery } from './query.type';
+import { UserWhereOrQuery } from '../prisma/query.type';
 
 @Injectable()
 export class UserService {
@@ -20,7 +20,7 @@ export class UserService {
             const error = e as Prisma.PrismaClientKnownRequestError;
 
             if (error.code === 'P2002') {
-                throw new BadRequestException(`User with such email already exists ${data.email}`);
+                throw new UnprocessableEntityException(`User with such email already exists ${data.email}`);
             }
 
             throw e;
