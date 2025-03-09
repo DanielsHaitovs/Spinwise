@@ -70,7 +70,7 @@ export default function EditUserButton({ user }: EditUserButtonProps) {
 
       setOpen(false)
       router.refresh()
-    } catch (e) {
+    } catch {
       toast.error('An unexpected error occurred when tried to update user', {
         duration: 5000,
       })

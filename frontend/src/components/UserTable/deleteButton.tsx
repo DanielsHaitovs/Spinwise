@@ -28,7 +28,7 @@ export default function DeleteUserButton({ userId }: DeleteButtonProps) {
       const { message } = await response.json()
       toast.success(message, { duration: 5000 })
       router.refresh()
-    } catch (e) {
+    } catch {
       toast.error('An unexpected error occurred when trying to delete user', {
         duration: 5000,
       })

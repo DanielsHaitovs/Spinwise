@@ -5,7 +5,7 @@ import { PrismaService } from '@PrismaDb/prisma.service';
 
 import { CreateUserDto, UserQueryDto, UpdateUserDto } from './user.dto';
 import { QueryRespsonse } from '@PrismaDb/response.dto';
-import { UserWhereOrQuery } from '../prisma/query.type';
+import { UserWhereOrQuery } from './query.type';
 
 @Injectable()
 export class UserService {

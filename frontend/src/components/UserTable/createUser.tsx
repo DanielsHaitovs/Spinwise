@@ -61,7 +61,7 @@ export default function CreateUserPopup() {
       setOpen(false)
       // Refresh the page to update the user list immediately
       router.refresh()
-    } catch (e) {
+    } catch {
       toast.error('An unexpected error occurred when tried to create user', {
         duration: 5000,
       })

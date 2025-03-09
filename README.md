@@ -26,6 +26,7 @@ Docker, Nestjs, Postgress powered by Prisma, Nextjs with shadcn
   # Prisma 
     Once DB is up and ready to accept the connections
     generates the Prisma Client based on your Prisma schema is done during build -> docker exec -it nestjs-backend npx prisma generate
+    (in case using dev) docker exec -it nestjs-backend-dev npx prisma generate
 
     3-1. Run Migrations
       docker exec -it nestjs-backend npx prisma migrate deploy
