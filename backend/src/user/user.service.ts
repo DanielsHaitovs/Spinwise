@@ -1,11 +1,13 @@
-import { BadRequestException, Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 
 import { Prisma, User } from '@prisma/client';
-import { PrismaService } from '@PrismaDb/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
+
+// import { PrismaService } from '@PrismaDb/prisma.service';
 
 import { CreateUserDto, UserQueryDto, UpdateUserDto } from './user.dto';
 import { QueryRespsonse } from '@PrismaDb/response.dto';
-import { UserWhereOrQuery } from './query.type';
+import { UserWhereOrQuery } from '../prisma/query.type';
 
 @Injectable()
 export class UserService {
@@ -20,7 +22,7 @@ export class UserService {
             const error = e as Prisma.PrismaClientKnownRequestError;
 
             if (error.code === 'P2002') {
-                throw new BadRequestException(`User with such email already exists ${data.email}`);
+                throw new UnprocessableEntityException(`User with such email already exists ${data.email}`);
             }
 
             throw e;
@@ -74,15 +76,23 @@ export class UserService {
         }
 
         if (firstNames != undefined && firstNames.length > 0) {
-            where['firstName'] = {
-                in: firstNames,
-            };
+            where.OR.push({
+                firstName: {
+                    in: firstNames,
+                },
+            });
         }
 
         if (lastNames != undefined && lastNames.length > 0) {
-            where['lastName'] = {
-                in: lastNames,
-            };
+            where.OR.push({
+                lastName: {
+                    in: lastNames,
+                },
+            });
+        }
+
+        if (where.OR.length === 0) {
+            where.OR = [];
         }
 
         if (skip !== undefined && skip > 0 && take !== undefined && take > 0) {
@@ -91,10 +101,10 @@ export class UserService {
 
         const [count, users] = await Promise.all([
             this.prismaService.user.count({
-                where,
+                where: where.OR.length > 0 ? where : undefined,
             }),
             this.prismaService.user.findMany({
-                where,
+                where: where.OR.length > 0 ? where : undefined,
                 skip,
                 take,
             }),
@@ -105,10 +115,7 @@ export class UserService {
         }
 
         if (count === 0) {
-            return {
-                count: 0,
-                data: [],
-            };
+            throw new NotFoundException(`Could not find any user with provided filter ${JSON.stringify(filter)}`);
         }
 
         return {

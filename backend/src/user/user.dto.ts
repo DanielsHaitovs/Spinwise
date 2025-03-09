@@ -45,6 +45,24 @@ export class GetUserDto extends CreateUserDto {
     @IsNotEmpty()
     @IsNumber()
     id: number;
+
+    @ApiProperty({
+        title: 'User Created At',
+        type: Date,
+        nullable: false,
+        required: true,
+    })
+    @IsNotEmpty()
+    createdAt: Date;
+
+    @ApiProperty({
+        title: 'User Updated At',
+        type: Date,
+        nullable: false,
+        required: true,
+    })
+    @IsNotEmpty()
+    updatedAt: Date;
 }
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {}
