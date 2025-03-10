@@ -18,7 +18,24 @@ Docker, Nestjs, Postgress powered by Prisma, Nextjs with shadcn
     FE_PORT=
     EXTERNAL_API_URL="http://backend:${API_PORT}"
 
-# Prepare Nestjs and Database
+    !! Notes
+    If you are running locally using docker database port suggested to be 5432
+
+# Nestjs and Database and FE
+  # Non Docker setup
+    In this case you would need to create .end file in backend and front end separately
+      backend ->
+        API_PORT=
+    
+        DB_USER=""
+        DB_PASSWORD=""
+        DB_PORT=
+        DB_NAME=""
+        DB_HOST=postgres
+    
+        DATABASE_URL="postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME?schema=SCHEMA"
+      frontend
+          EXTERNAL_API_URL=""
   # Docker
     # To start the project
     2-1. docker-composer up --build OR (docker-compose build && docker-compose up)
